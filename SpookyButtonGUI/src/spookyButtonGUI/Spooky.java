@@ -5,7 +5,9 @@ import java.awt.FlowLayout;
 import java.awt.Font;
 import java.awt.Image;
 import java.awt.image.BufferedImage;
-
+import java.io.IOException;
+import javax.sound.sampled.LineUnavailableException;
+import javax.sound.sampled.UnsupportedAudioFileException;
 import javax.swing.ImageIcon;
 import javax.swing.JButton;
 import javax.swing.JFrame;
@@ -17,22 +19,34 @@ public class Spooky extends JFrame{
 	/**
 	 * 
 	 */
-	private static final long serialVersionUID = -3256383923985192098L;
+	private static final long serialVersionUID = -3130845282986037923L;
+
 	private Dimension SIZE = new Dimension(400, 194);
+	private ImageIcon skull;
+	private Image icon;
+	private JFrame window;
+	private JPanel panel;
+	private JPanel graphicsPanel;
+	private JPanel buttonPanel;
+	private JLabel skullLabel;
+	private JLabel time;
+	private JButton yes;
+	private JButton hellYes;
+	
 
 	public Spooky() {
 		
-		ImageIcon skull = new ImageIcon("skull.png");
-		Image icon = new BufferedImage(1, 1, BufferedImage.TYPE_INT_ARGB_PRE);
-		JFrame window= new JFrame("It's Nearly October");
-		JPanel panel = new JPanel();
-		JPanel graphicsPanel = new JPanel();
-		JPanel buttonPanel = new JPanel();
-		JLabel skullLabel = new JLabel(skull);
-		JLabel time = new JLabel("Time to get spooky!");
-		JButton yes = new JButton("Yes");
-		JButton hellYes = new JButton("Hell Yes");
-		
+		skull = new ImageIcon("skull.png");
+		icon = new BufferedImage(1, 1, BufferedImage.TYPE_INT_ARGB_PRE);
+		window= new JFrame("It's Nearly October");
+		panel = new JPanel();
+		graphicsPanel = new JPanel();
+		buttonPanel = new JPanel();
+		skullLabel = new JLabel(skull);
+		time = new JLabel("Time to get spooky!");
+		yes = new JButton("Yes");
+		hellYes = new JButton("Hell Yes");
+
 		window.setPreferredSize(SIZE);
 		panel.setPreferredSize(SIZE);
 		graphicsPanel.setPreferredSize(new Dimension(400, 87));
@@ -42,10 +56,28 @@ public class Spooky extends JFrame{
 		
 		window.setIconImage(icon);
 		window.setResizable(false);
-		window.setDefaultCloseOperation(EXIT_ON_CLOSE);
+		window.setDefaultCloseOperation(EXIT_ON_CLOSE);;
 		window.setFont(new Font("Hellvetica", Font.PLAIN, 16));
 		
 		time.setFont(new Font("Hellvetica", Font.PLAIN, 14));
+		yes.addActionListener(e -> {
+			try {
+				Yes y = new Yes();			 
+			} catch (LineUnavailableException | IOException | UnsupportedAudioFileException e1) {
+				// TODO Auto-generated catch block
+				e1.printStackTrace();
+			}
+		});
+		
+		hellYes.addActionListener(hy -> {
+			try {
+				HellYes hell = new HellYes();
+			} catch (LineUnavailableException | IOException | 
+					UnsupportedAudioFileException e1) {
+				// TODO Auto-generated catch block
+				e1.printStackTrace();
+			}
+		});
 		
 		graphicsPanel.setLayout(new FlowLayout(FlowLayout.LEFT, 30, 0));
 		graphicsPanel.add(skullLabel);
@@ -61,6 +93,7 @@ public class Spooky extends JFrame{
 		
 		window.add(panel);
 		window.pack();
+		window.setLocationRelativeTo(null);
 		window.setVisible(true);
 	}
 }

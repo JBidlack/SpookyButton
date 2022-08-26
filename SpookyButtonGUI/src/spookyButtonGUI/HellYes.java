@@ -8,6 +8,8 @@ import java.awt.event.WindowListener;
 import java.awt.image.BufferedImage;
 import java.io.File;
 import java.io.IOException;
+import java.net.URL;
+
 import javax.sound.sampled.AudioInputStream;
 import javax.sound.sampled.AudioSystem;
 import javax.sound.sampled.Clip;
@@ -26,17 +28,20 @@ public class HellYes extends JFrame {
 	private static final long serialVersionUID = 5229950398104396393L;
 
 	private Dimension SIZE = new Dimension(400, 400);
-	private File audio = new File("hauntedHouse.wav");
-	private AudioInputStream ais = AudioSystem.getAudioInputStream(audio.getAbsoluteFile());
+	private URL urlAudio = this.getClass().getResource("/media/hauntedHouse.wav");
+	private File audio = new File("src/media/hauntedHouse.wav");
+	private AudioInputStream ais = AudioSystem.getAudioInputStream(urlAudio);
 	private Clip clip = AudioSystem.getClip();
-	private ImageIcon doot = new ImageIcon("spookyhouse.gif");
+	private URL urlImg = this.getClass().getResource("/media/spookyhouse.gif");
+	private ImageIcon spooky = new ImageIcon(urlImg);
 	private Image icon = new BufferedImage(1, 1, BufferedImage.TYPE_INT_ARGB_PRE);
 	private JFrame window= new JFrame("It's Nearly October");
 	private JPanel panel = new JPanel();
 	private JPanel countdownPanel = new JPanel();
 	private JPanel graphicsPanel = new JPanel();
-	private JLabel msg = new JLabel("");
-	private JLabel skelly = new JLabel(doot);
+	//private JLabel msg = new JLabel("");
+	private JLabel skelly = new JLabel(spooky);
+	
 
 	public HellYes() 
 			throws LineUnavailableException, IOException, 

@@ -6,6 +6,7 @@ import java.awt.Image;
 import java.awt.image.BufferedImage;
 import java.io.File;
 import java.io.IOException;
+import java.net.URL;
 import java.time.LocalDate;
 import java.time.format.DateTimeFormatter;
 import java.time.temporal.ChronoUnit;
@@ -32,9 +33,11 @@ public class Yes extends JFrame{
 	private long duration = ChronoUnit.DAYS.between(today, hw);
 	private String remaining = Long.toString(duration);
 	private Dimension SIZE = new Dimension(400, 400);
-	private File audio = new File("trumpet.wav");
-	private AudioInputStream ais = AudioSystem.getAudioInputStream(audio.getAbsoluteFile());
-	private ImageIcon doot = new ImageIcon("doot.gif");
+	private URL urlAudio = this.getClass().getResource("/media/trumpet.wav");
+	private File audio = new File("src/media/trumpet.wav");
+	private AudioInputStream ais = AudioSystem.getAudioInputStream(urlAudio);
+	private URL urlImg = this.getClass().getResource("/media/doot.gif");
+	private ImageIcon doot = new ImageIcon(urlImg);
 	private Image icon = new BufferedImage(1, 1, BufferedImage.TYPE_INT_ARGB_PRE);
 	private JFrame window = new JFrame("It's Nearly October");
 	private JPanel panel = new JPanel();
@@ -42,6 +45,7 @@ public class Yes extends JFrame{
 	private JPanel graphicsPanel = new JPanel();
 	private JLabel skelly = new JLabel(doot);
 	private Clip clip = AudioSystem.getClip();
+	
 	
 	
 	public Yes() 

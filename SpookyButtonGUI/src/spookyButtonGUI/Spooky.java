@@ -6,6 +6,8 @@ import java.awt.Font;
 import java.awt.Image;
 import java.awt.image.BufferedImage;
 import java.io.IOException;
+import java.net.URL;
+
 import javax.sound.sampled.LineUnavailableException;
 import javax.sound.sampled.UnsupportedAudioFileException;
 import javax.swing.ImageIcon;
@@ -32,11 +34,11 @@ public class Spooky extends JFrame{
 	private JLabel time;
 	private JButton yes;
 	private JButton hellYes;
-	
+	private URL url = this.getClass().getResource("/media/skull.png");
 
 	public Spooky() {
 		
-		skull = new ImageIcon("skull.png");
+		skull = new ImageIcon(url);
 		icon = new BufferedImage(1, 1, BufferedImage.TYPE_INT_ARGB_PRE);
 		window= new JFrame("It's Nearly October");
 		panel = new JPanel();
@@ -62,7 +64,7 @@ public class Spooky extends JFrame{
 		time.setFont(new Font("Hellvetica", Font.PLAIN, 14));
 		yes.addActionListener(e -> {
 			try {
-				Yes y = new Yes();			 
+				HellYes y = new HellYes();			 
 			} catch (LineUnavailableException | IOException | UnsupportedAudioFileException e1) {
 				// TODO Auto-generated catch block
 				e1.printStackTrace();
@@ -71,7 +73,7 @@ public class Spooky extends JFrame{
 		
 		hellYes.addActionListener(hy -> {
 			try {
-				HellYes hell = new HellYes();
+				Yes hell = new Yes();
 			} catch (LineUnavailableException | IOException | 
 					UnsupportedAudioFileException e1) {
 				// TODO Auto-generated catch block

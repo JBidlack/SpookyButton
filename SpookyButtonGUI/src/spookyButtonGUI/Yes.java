@@ -91,6 +91,7 @@ public class Yes extends JFrame{
 		}
 		else {
 			hw.plusYears(1); 
+			duration = ChronoUnit.DAYS.between(today, hw);
 			daysLeft(duration);
 		}
 		return daysRemaining;

@@ -31,10 +31,8 @@ public class Yes extends JFrame{
 	private LocalDate today = LocalDate.now();
 	private LocalDate hw = LocalDate.parse(halloween, dtf);
 	private long duration = ChronoUnit.DAYS.between(today, hw);
-	private String remaining = Long.toString(duration);
 	private Dimension SIZE = new Dimension(400, 400);
 	private URL urlAudio = this.getClass().getResource("/media/trumpet.wav");
-	private File audio = new File("src/media/trumpet.wav");
 	private AudioInputStream ais = AudioSystem.getAudioInputStream(urlAudio);
 	private URL urlImg = this.getClass().getResource("/media/doot.gif");
 	private ImageIcon doot = new ImageIcon(urlImg);
@@ -45,6 +43,7 @@ public class Yes extends JFrame{
 	private JPanel graphicsPanel = new JPanel();
 	private JLabel skelly = new JLabel(doot);
 	private Clip clip = AudioSystem.getClip();
+	private int counter = 0;
 	
 	
 	
@@ -65,7 +64,7 @@ public class Yes extends JFrame{
 		graphicsPanel.setLayout(new FlowLayout());
 	
 		clip.open(ais);
-		countdownPanel.add(daysLeft(duration));
+		countdownPanel.add(daysLeft(duration, hw));
 		graphicsPanel.add(skelly);
 		
 		panel.add(countdownPanel);
@@ -79,21 +78,22 @@ public class Yes extends JFrame{
 		
 	}
 	
-	private JLabel daysLeft(long duration) {
+	private JLabel daysLeft(long duration, LocalDate date) {
 		JLabel daysRemaining = new JLabel();
+		while(duration < 0) {
+			LocalDate nextYear = date.plusYears(counter);
+			duration = ChronoUnit.DAYS.between(today, nextYear);
+			counter++;
+		}
 		
 		if (duration == 0) {
 			daysRemaining = new JLabel("IT'S TIME TO GET SPOOKY!!!!!");
 		}
 		
 		if(duration > 0) {
-			daysRemaining = new JLabel(remaining + " doots left!!");
+			daysRemaining = new JLabel(Long.toString(duration) + " doots left!!");
 		}
-		else {
-			hw.plusYears(1); 
-			duration = ChronoUnit.DAYS.between(today, hw);
-			daysLeft(duration);
-		}
+
 		return daysRemaining;
 	}
 }

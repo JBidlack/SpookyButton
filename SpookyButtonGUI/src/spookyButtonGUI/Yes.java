@@ -88,12 +88,17 @@ public class Yes extends JFrame{
 		
 		if (duration == 0) {
 			daysRemaining = new JLabel("IT'S TIME TO GET SPOOKY!!!!!");
+			return daysRemaining;
 		}
 		
 		if(duration > 0) {
 			daysRemaining = new JLabel(Long.toString(duration) + " doots left!!");
+			return daysRemaining;
 		}
-
+		else {
+			
+			//daysLeft(duration, nextYear);
+		}
 		return daysRemaining;
 	}
 }

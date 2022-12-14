@@ -7,13 +7,18 @@ import java.awt.Image;
 import java.awt.image.BufferedImage;
 import java.io.IOException;
 import java.net.URL;
+import java.util.concurrent.TimeUnit;
 
+import javax.sound.sampled.AudioInputStream;
+import javax.sound.sampled.AudioSystem;
+import javax.sound.sampled.Clip;
 import javax.sound.sampled.LineUnavailableException;
 import javax.sound.sampled.UnsupportedAudioFileException;
 import javax.swing.ImageIcon;
 import javax.swing.JButton;
 import javax.swing.JFrame;
 import javax.swing.JLabel;
+import javax.swing.JOptionPane;
 import javax.swing.JPanel;
 
 public class Spooky extends JFrame{
@@ -23,6 +28,7 @@ public class Spooky extends JFrame{
 	 */
 	private static final long serialVersionUID = -3130845282986037923L;
 
+	private int counter = 0;
 	private Dimension SIZE = new Dimension(400, 194);
 	private ImageIcon skull;
 	private Image icon;
@@ -64,8 +70,8 @@ public class Spooky extends JFrame{
 		time.setFont(new Font("Hellvetica", Font.PLAIN, 14));
 		yes.addActionListener(e -> {
 			try {
-				HellYes y = new HellYes();			 
-			} catch (LineUnavailableException | IOException | UnsupportedAudioFileException e1) {
+				falseButton(counter);
+			} catch (UnsupportedAudioFileException | IOException | LineUnavailableException | InterruptedException e1) {
 				// TODO Auto-generated catch block
 				e1.printStackTrace();
 			}
@@ -74,6 +80,7 @@ public class Spooky extends JFrame{
 		hellYes.addActionListener(hy -> {
 			try {
 				Yes hell = new Yes();
+				
 			} catch (LineUnavailableException | IOException | 
 					UnsupportedAudioFileException e1) {
 				// TODO Auto-generated catch block
@@ -97,5 +104,44 @@ public class Spooky extends JFrame{
 		window.pack();
 		window.setLocationRelativeTo(null);
 		window.setVisible(true);
+	}
+	
+	private void falseButton(int counter) throws UnsupportedAudioFileException, IOException
+	, LineUnavailableException, InterruptedException {
+		
+		URL trumpet1 = this.getClass().getResource("/media/trumpet1.wav");
+		AudioInputStream ais1 = AudioSystem.getAudioInputStream(trumpet1);
+		URL trumpet2 = this.getClass().getResource("/media/trumpet2.wav");
+		AudioInputStream ais2 = AudioSystem.getAudioInputStream(trumpet2);
+		URL trumpet3 = this.getClass().getResource("/media/trumpet3.wav");
+		AudioInputStream ais3 = AudioSystem.getAudioInputStream(trumpet3);
+		Clip clip = AudioSystem.getClip();
+		
+		if(counter == 0) {
+			clip.open(ais1);
+			clip.start();
+			TimeUnit.MILLISECONDS.sleep(1250);
+			JOptionPane.showMessageDialog(null,  "I can't HEAR you!");
+			this.counter++;
+			clip.close();
+		}
+		else if(counter == 1) {
+			clip.open(ais2);
+			clip.start();
+			TimeUnit.MILLISECONDS.sleep(1500);
+			JOptionPane.showMessageDialog(null,  "I SAID... I can't HEAR you!");
+			this.counter++;
+			clip.close();
+		}
+		else if(counter == 2) {
+			clip.open(ais3);
+			clip.start();
+			yes.setEnabled(false);
+			TimeUnit.MILLISECONDS.sleep(3500);
+			JOptionPane.showMessageDialog(null,  "You clearly aren't enthusiastic enough... That's better....");
+			counter++;
+			clip.close();
+		}
+		
 	}
 }

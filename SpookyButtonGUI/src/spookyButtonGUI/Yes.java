@@ -4,7 +4,6 @@ import java.awt.Dimension;
 import java.awt.FlowLayout;
 import java.awt.Image;
 import java.awt.image.BufferedImage;
-import java.io.File;
 import java.io.IOException;
 import java.net.URL;
 import java.time.LocalDate;
@@ -27,8 +26,8 @@ public class Yes extends JFrame{
 	private static final long serialVersionUID = -7163980045351978118L;
 	
 	private DateTimeFormatter dtf = DateTimeFormatter.ofPattern("MMddyyyy");
-	private String halloween = "10312022";
-	private LocalDate today = LocalDate.now();
+    private static LocalDate today = LocalDate.now();
+    private static String halloween = "1031"+ today.getYear();
 	private LocalDate hw = LocalDate.parse(halloween, dtf);
 	private long duration = ChronoUnit.DAYS.between(today, hw);
 	private Dimension SIZE = new Dimension(400, 400);
@@ -80,11 +79,12 @@ public class Yes extends JFrame{
 	
 	private JLabel daysLeft(long duration, LocalDate date) {
 		JLabel daysRemaining = new JLabel();
-		while(duration < 0) {
-			LocalDate nextYear = date.plusYears(counter);
-			duration = ChronoUnit.DAYS.between(today, nextYear);
-			counter++;
-		}
+		
+        if(duration < 0) {
+            halloween = "1031"+ (today.getYear()+1);
+            hw = LocalDate.parse(halloween, dtf);
+            duration = ChronoUnit.DAYS.between(today, hw);
+        }
 		
 		if (duration == 0) {
 			daysRemaining = new JLabel("IT'S TIME TO GET SPOOKY!!!!!");
@@ -95,10 +95,7 @@ public class Yes extends JFrame{
 			daysRemaining = new JLabel(Long.toString(duration) + " doots left!!");
 			return daysRemaining;
 		}
-		else {
-			
-			//daysLeft(duration, nextYear);
-		}
+
 		return daysRemaining;
 	}
 }

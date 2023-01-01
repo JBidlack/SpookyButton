@@ -109,12 +109,9 @@ public class Spooky extends JFrame{
 	private void falseButton(int counter) throws UnsupportedAudioFileException, IOException
 	, LineUnavailableException, InterruptedException {
 		
-		URL trumpet1 = this.getClass().getResource("/media/trumpet1.wav");
-		AudioInputStream ais1 = AudioSystem.getAudioInputStream(trumpet1);
-		URL trumpet2 = this.getClass().getResource("/media/trumpet2.wav");
-		AudioInputStream ais2 = AudioSystem.getAudioInputStream(trumpet2);
-		URL trumpet3 = this.getClass().getResource("/media/trumpet3.wav");
-		AudioInputStream ais3 = AudioSystem.getAudioInputStream(trumpet3);
+		URL wrong = this.getClass().getResource("/media/wrong.wav");
+		AudioInputStream ais1 = AudioSystem.getAudioInputStream(wrong);
+		
 		Clip clip = AudioSystem.getClip();
 		
 		if(counter == 0) {
@@ -126,7 +123,7 @@ public class Spooky extends JFrame{
 			clip.close();
 		}
 		else if(counter == 1) {
-			clip.open(ais2);
+			clip.open(ais1);
 			clip.start();
 			TimeUnit.MILLISECONDS.sleep(1500);
 			JOptionPane.showMessageDialog(null,  "I SAID... I can't HEAR you!");
@@ -134,11 +131,11 @@ public class Spooky extends JFrame{
 			clip.close();
 		}
 		else if(counter == 2) {
-			clip.open(ais3);
+			clip.open(ais1);
 			clip.start();
 			yes.setEnabled(false);
 			TimeUnit.MILLISECONDS.sleep(3500);
-			JOptionPane.showMessageDialog(null,  "You clearly aren't enthusiastic enough... That's better....");
+			JOptionPane.showMessageDialog(null,  "You clearly aren't enthusiastic enough... Let me help....");
 			counter++;
 			clip.close();
 		}
